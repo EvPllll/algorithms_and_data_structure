@@ -55,9 +55,9 @@
 #
 # у питона есть встроенные средства двоичного поиска
 
-from bisect import bisect_left
-
-sorted_fruits = ['apple', 'banana', 'orange', 'plum']
+# from bisect import bisect_left # библиотека для двоичного поиска
+#
+# sorted_fruits = ['apple', 'banana', 'orange', 'plum']
 # print(bisect_left(sorted_fruits, 'banana')) # показывает индекс искомого элемента
 # print(bisect_left(sorted_fruits, 'kiwi')) # показывает индекс где мог бы быть искомый элемент если его нет в списке
 
@@ -78,12 +78,12 @@ sorted_fruits = ['apple', 'banana', 'orange', 'plum']
 
 # print(ord('@')) # определение юникода символа (может быть полезно при поиске символов)
 
-names = ['Ann', 'Bob', 'Mary', 'Zoltan']
-
-def new_search(some_list: list, some_element: str) -> bool:
-    index = bisect_left(some_list, some_element)
-    if index <= len(some_list) and some_list[index] == some_element:
-        return True
-    return False
-
-print(new_search(names, 'Ann'))
+# names = ['Ann', 'Bob', 'Mary', 'Zoltan']
+#
+# def new_search(some_list: list, some_element: str) -> bool:
+#     index = bisect_left(some_list, some_element)
+#     if index <= len(some_list) and some_list[index] == some_element:
+#         return True
+#     return False
+#
+# print(new_search(names, 'Ann'))
