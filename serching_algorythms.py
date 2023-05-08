@@ -63,14 +63,17 @@ sorted_fruits = ['apple', 'banana', 'orange', 'plum']
 
 # для проверки вхождения элемента используем функцию
 
-def binary_search(some_list: list, some_element: str) -> bool:
-    index = bisect_left(some_list, some_element)
-    if index <= len(some_list) and some_list[index] == some_element:
-        return True
-    return False
+# def binary_search(some_list: list, some_element: str) -> bool:
+#     index = bisect_left(some_list, some_element)
+#     if index <= len(some_list) and some_list[index] == some_element:
+#         return True
+#     return False
+#
+# # получаем индекс элемента и проверяем имеется ли этот индекс в списке
+# # и если элемент списка по этому индексу равен искомому элементу, то истина
+# # в противном случае ложь
+#
+# print(binary_search(sorted_fruits, 'banana'))
 
-# получаем индекс элемента и проверяем имеется ли этот индекс в списке
-# и если элемент списка по этому индексу равен искомому элементу, то истина
-# в противном случае ложь
 
-print(binary_search(sorted_fruits, 'banana'))
+# print(ord('@')) # определение юникода символа (может быть полезно при поиске символов)
