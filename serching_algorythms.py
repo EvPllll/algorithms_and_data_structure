@@ -77,3 +77,13 @@ sorted_fruits = ['apple', 'banana', 'orange', 'plum']
 
 
 # print(ord('@')) # определение юникода символа (может быть полезно при поиске символов)
+
+names = ['Ann', 'Bob', 'Mary', 'Zoltan']
+
+def new_search(some_list: list, some_element: str) -> bool:
+    index = bisect_left(some_list, some_element)
+    if index <= len(some_list) and some_list[index] == some_element:
+        return True
+    return False
+
+print(new_search(names, 'Ann'))
