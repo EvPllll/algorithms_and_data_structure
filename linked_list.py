@@ -49,8 +49,10 @@ class LinkedList:
                                   # добавляем новое значение в конец связного списка
 
     def __str__(self):
-        if not self.head:
-            print('LOH')
+        node = self.head
+        while node is not None:
+            print(node.data)
+            node = node.next
 
 
 
