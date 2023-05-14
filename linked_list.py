@@ -25,54 +25,122 @@
 
 # Создание связного списка
 # Применяем ООП
-# Сначала создаём класс узла
-
-class Node:
-    def __init__(self, data, next=None):
-        self.data = data
-        self.next = next
-
-# Затем уже создаём сам связной список
+# Собственно, создаём))
 
 class LinkedList:
-    def __init__(self):
-        self.head = None
+    head = None
+    length = 0
 
-    def append(self, data): # метод "добавить"
-        if not self.head: # если нет головного узла
-            self.head = Node(data) # то головной узел будет равен присвоенному значению
-            return # возвращаем, т.е. заканчиваем функцию
-        current = self.head # в противном случае создаём переменную котрой присваиваем значение головного узла
-        while current.next: # пока есть следующий элемент
-            current = current.next # наша созданная переменная будет равна следующему элементу
-        current.next = Node(data) # после окончания цикла (когда будет найден последний элемент)
-                                  # добавляем новое значение в конец связного списка
+    class Node:
+        element = None
+        next_node = None
 
-    def __str__(self):
+        def __init__(self, element, next_node=None):
+            self.element = element
+            self.next_node = next_node
+
+    def append(self, element):
+        if not self.head:
+            self.head = self.Node(element)
+            self.length += 1
+            return element
         node = self.head
-        while node is not None:
-            print(node.data)
-            node = node.next
+        while node.next_node:
+            node = node.next_node
+
+        node.next_node = self.Node(element)
+        self.length += 1
+
+    def insert(self, element, index):
+        count = 0
+        node = self.head
+        previously_node = self.head
+
+        while count < index:
+            previously_node = node
+            node = node.next_node
+            count += 1
+
+        previously_node.next_node = self.Node(element, next_node=node)
+
+        self.length += 1
+
+        return element
+
+    def assign(self, element, index):
+        node = self.head
+        count = 0
+
+        while count < index:
+            node = node.next_node
+            count += 1
+
+        node.element = element
+
+    def delete(self, index):
+        if index == 0:
+            self.head = self.head.next_node
+
+        node = self.head
+        count = 0
+        previously_node = node
+
+        while count < index:
+            previously_node = node
+            node = node.next_node
+            count += 1
+
+        previously_node.next_node = node.next_node
+        element = node.element
+
+        del node
+        self.length -= 1
+
+    def get(self, index):
+        count = 0
+        node = self.head
+        previously_node = self.head
+
+        while count < index:
+            previously_node = node
+            node = node.next_node
+            count += 1
+
+        return node.element
+
+    def out(self):
+        node = self.head
+
+        while node:
+            print(node.element)
+            node = node.next_node
 
 
-
-
-from collections import deque
-# импорт стандартного связного списка из встроенной библиотеки collections
 
 
 if __name__ == '__main__':
-    linked = LinkedList()
-    linked.append('123')
-    linked.append('456')
-    print(linked)
+    linked_list = LinkedList()
+
+    linked_list.append(10)
+    linked_list.append(20)
+    linked_list.append(30)
+    linked_list.insert(666, 2)
+    linked_list.append(50)
+    linked_list.append(100)
+    linked_list.delete(2)
+    print('\n')
+    linked_list.append('Complete!')
+    linked_list.assign('More complete!', 5)
+    linked_list.assign(999, 0)
+    a = linked_list.get(5)
+
+    linked_list.out()
+    print(linked_list.get(2))
+
+    print(a)
+
+    print(linked_list.length)
 
 
-    d = deque()
 
-    d.append('First')
-    d.append('Second')
-    d.append('Third')
 
-    for item in d:
-        print(item)
