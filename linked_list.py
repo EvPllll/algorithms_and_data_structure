@@ -27,96 +27,100 @@
 # Применяем ООП
 # Собственно, создаём))
 
-class LinkedList:
-    head = None
-    length = 0
+class LinkedList: # создаём класс односвязного списка
+    head = None # начало списка по умолчанию пустой
+    length = 0 # для вычисления длины списка - по умолчанию 0
 
-    class Node:
-        element = None
-        next_node = None
+    class Node: # создаём внутри класса списка класс узла
+        element = None # узел имеет какой-то элемент внутри себя
+        next_node = None # узел связан со следующим узлом
 
-        def __init__(self, element, next_node=None):
-            self.element = element
-            self.next_node = next_node
+        def __init__(self, element, next_node=None): # инициализация узла, следующий узел по умолчанию - пуст (его нет)
+            self.element = element # элемент узла будет равен заданному элементу
+            self.next_node = next_node # следующий узел будет равен заданному следующему узлу
 
-    def append(self, element):
-        if not self.head:
-            self.head = self.Node(element)
-            self.length += 1
-            return element
-        node = self.head
-        while node.next_node:
-            node = node.next_node
+    def append(self, element): # метод добавления узлов в конец списка (а у узла внутри элемент, помним)
+        if not self.head: # если нет даже первого элемента (узла)
+            self.head = self.Node(element) # то добавляем узел(элемент) в начало списка
+            self.length += 1 # добавляем длины для вычислений длины списка
+            return element # возвращаем этот элемент (необязательно)
+        node = self.head # объявляем переменную узла и присваиваем ей значение первого элемента списка
+        while node.next_node: # пока у узла есть следующий узел (элемент)
+            node = node.next_node # узел равен следующему узлу
 
-        node.next_node = self.Node(element)
-        self.length += 1
+        node.next_node = self.Node(element) # когда следующего узла нет, добавляем следующий узел(элемент)
+        self.length += 1 # увеличиваем длину для вычисления длины
 
-    def insert(self, element, index):
-        count = 0
-        node = self.head
-        previously_node = self.head
+    def insert(self, element, index): # вставка элемента в список, параметры - добавляемый элемент и индекс списка
+        count = 0 # счётчик нужен для цикла - что бы дойти до нужного нам индекса
+        node = self.head # объявляем переменную узла и присваиваем ей первый элемент списка
+        previously_node = self.head # объявляем переменную предыдущего узла и присваиваем ей первый элемент списка
 
-        while count < index:
+        while count < index: # пока счётчик меньше заданного индекса
+            previously_node = node # предыдущий узел равен узлу на данный момент
+            node = node.next_node # узел на данный момент равен следующему узлу
+            count += 1 # добавляем единицу к счётчику что бы избежать бесконечный цикл и "бежать" по списку
+
+        previously_node.next_node = self.Node(element, next_node=node) # когда дошли до нужного нам индекса
+        # присваиваем следующему узлу предыдущего узла нужный нам элемент в новом узле, следующий узле которого
+        # будет узлом на данный момент
+
+        self.length += 1 # увеличиваем длину списка так как добавили новый элемент
+
+        return element # возвращаем новый элемент (необязательно)
+
+    def assign(self, element, index): # изменение элемента в списке
+        node = self.head # объявляем узел и присваеиваем ему первый элемент списка
+        count = 0 # объявляем счётчик что бы "бежать" по списку
+
+        while count < index: # пока счётчик меньше нужного нам индекса
+            node = node.next_node # узел равен следующему узлу ("бежим" по списку)
+            count += 1 # счётчик прибавляем на единицу
+
+        node.element = element # когда дошли до нужного нам индекса присваиваем элементу узла новый эелемент
+
+    def delete(self, index): # удаление узла (элемента, соответственно)
+        if index == 0: # если индекс удаляемого элемента равен нулю, то
+            self.head = self.head.next_node # начала списка будет следующим элементом после начала списка
+
+        node = self.head # объявляем узел и присваиваем ему начало узла
+        count = 0 # объявляем счётчик для "пробега" по списку
+        previously_node = node # предыдущий узел равен нынешнему узлу
+
+        while count < index: # надоело повторяться
+            previously_node = node # предыдущий узел равен нынешнему узлу
+            node = node.next_node # нынешний узел равен следующему узлу
+            count += 1 # счётчик плюс один ("бежим" по списку)
+
+        previously_node.next_node = node.next_node # следующему узлу предыдущего узла присваиваем следующий узел
+        # нынешнего узла
+
+        del node # удаляем узел, так как связи уже присвоены
+        self.length -= 1 # уменьшаем длину списка так как удалили один элемент
+
+    def get(self, index): # получение элемента списка
+        count = 0 # счётчик
+        node = self.head # начало списка в объявленном узле
+        previously_node = self.head # предыдущий тоже
+
+        while count < index: # и снова надоело повторяться, и так, я думаю понятно что это :)
             previously_node = node
             node = node.next_node
             count += 1
 
-        previously_node.next_node = self.Node(element, next_node=node)
+        return node.element # возвращаем элемент до которого дошли (по заданному индексу)
 
-        self.length += 1
+    def out(self): # вывод односвязного списка
+        node = self.head # задаём начало списка объявленной переменной
 
-        return element
-
-    def assign(self, element, index):
-        node = self.head
-        count = 0
-
-        while count < index:
-            node = node.next_node
-            count += 1
-
-        node.element = element
-
-    def delete(self, index):
-        if index == 0:
-            self.head = self.head.next_node
-
-        node = self.head
-        count = 0
-        previously_node = node
-
-        while count < index:
-            previously_node = node
-            node = node.next_node
-            count += 1
-
-        previously_node.next_node = node.next_node
-        element = node.element
-
-        del node
-        self.length -= 1
-
-    def get(self, index):
-        count = 0
-        node = self.head
-        previously_node = self.head
-
-        while count < index:
-            previously_node = node
-            node = node.next_node
-            count += 1
-
-        return node.element
-
-    def out(self):
-        node = self.head
-
-        while node:
-            print(node.element)
-            node = node.next_node
+        while node: # пока если узлы
+            print(node.element) # выводим узел
+            node = node.next_node # переходим на следующий
 
 
 
+
+# ниже основная программа и проверки (без тестов)
 
 if __name__ == '__main__':
     linked_list = LinkedList()
